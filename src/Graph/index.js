@@ -104,60 +104,6 @@ class Graph extends React.Component<IGraphProps, IGraphState> {
         });
     }
 
-    // Given a nodeKey, return the corresponding node
-    getViewNode(nodeKey: string) {
-        const searchNode = {};
-        searchNode[NODE_KEY] = nodeKey;
-        const i = this.getNodeIndex(searchNode);
-        return this.state.graph.nodes[i];
-    }
-
-    makeItLarge = () => {
-        const graph = this.state.graph;
-        const generatedSample = generateSample(this.state.totalNodes);
-        graph.nodes = generatedSample.nodes;
-        graph.edges = generatedSample.edges;
-        this.setState(this.state);
-    }
-
-    addStartNode = () => {
-        const graph = this.state.graph;
-        // using a new array like this creates a new memory reference
-        // this will force a re-render
-        graph.nodes = [
-            {
-                id: Date.now(),
-                title: 'Node A',
-                type: SPECIAL_TYPE,
-                x: 0,
-                y: 0
-            },
-            ...this.state.graph.nodes
-        ];
-        this.setState({
-            graph
-        });
-    }
-    deleteStartNode = () => {
-        const graph = this.state.graph;
-        graph.nodes.splice(0, 1);
-        // using a new array like this creates a new memory reference
-        // this will force a re-render
-        graph.nodes = [...this.state.graph.nodes];
-        this.setState({
-            graph
-        });
-    }
-
-    handleChange = (event: any) => {
-        this.setState(
-            {
-                totalNodes: parseInt(event.target.value || '0', 10)
-            },
-            this.makeItLarge
-        );
-    }
-
     /*
      * Handlers/Interaction
      */
@@ -300,10 +246,6 @@ class Graph extends React.Component<IGraphProps, IGraphState> {
         this.forceUpdate();
     }
 
-    handleChangeLayoutEngineType = (event: any) => {
-        this.setState({layoutEngineType: (event.target.value: LayoutEngineType | 'None')});
-    }
-
     /*
      * Render
      */
@@ -315,27 +257,6 @@ class Graph extends React.Component<IGraphProps, IGraphState> {
 
         return (
             <div id="graph">
-                <div className="graph-header">
-                    <button onClick={this.addStartNode}>Add Node</button>
-                    <button onClick={this.deleteStartNode}>Delete Node</button>
-                    <input
-                        className="total-nodes"
-                        type="number"
-                        onBlur={this.handleChange}
-                        placeholder={this.state.totalNodes.toString()}
-                    />
-                    <div className="layout-engine">
-                        <span>Layout Engine:</span>
-                        <select
-                            name="layout-engine-type"
-                            onChange={this.handleChangeLayoutEngineType}
-                        >
-                            <option value={undefined}>None</option>
-                            <option value={'SnapToGrid'}>Snap to Grid</option>
-                            <option value={'VerticalTree'}>Vertical Tree</option>
-                        </select>
-                    </div>
-                </div>
                 <GraphView
                     ref={(el) => (this.GraphView = el)}
                     nodeKey={NODE_KEY}
