@@ -17,6 +17,35 @@ export type IGraph = {
     edges: IEdge[];
 };
 
+const SOURCE_NODE_ID = 's',
+    SINK_NODE_ID = 't';
+
+const SOURCE_NODE = 'Source',
+    SINK_NODE = 'Sink';
+
+export const sampleNetwork: IGraph = {
+    // TODO: fill this in
+    nodes: [
+        {
+            id: SOURCE_NODE_ID,
+            title: SOURCE_NODE,
+            type: SPECIAL_TYPE,
+            x: 0,
+            y: 0 // fill in
+        },
+        {
+            id: SINK_NODE_ID,
+            title: SINK_NODE,
+            type: SPECIAL_TYPE,
+            x: 100,
+            y: 100 // fill in
+        }
+    ],
+    edges: [
+
+    ]
+};
+
 // NOTE: Edges must have 'source' & 'target' attributes
 // In a more realistic use case, the graph would probably originate
 // elsewhere in the App or be generated from some other state upstream of this component.
